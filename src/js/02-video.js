@@ -2,35 +2,49 @@ import Player from '@vimeo/player';
 import throttle from 'lodash.throttle';
 
 const iframe = document.querySelector('iframe');
-const player = new Vimeo.Player(iframe);
-const throttle = require('lodash.throttle');
+const player = new Player(iframe);
+const CURRENT_TIME = 'videoplayer-current-time';
 
-const playHandle = function (data) {
-  localStorage.setItem('videoplayer-current-time', JSON.stringify(data));
+const onTime = function (data) {
+  localStorage.setItem(CURRENT_TIME, data.seconds);
 };
+player.on('timeupdate', throttle(onTime, 1000));
 
-player.on('timeUpdate', throttle(playHandle, 1000));
-
-try {
-  const dataParced = JSON.parse(
-    localStorage.getItem('videoplayer-current-time')
-  );
-  player
-    .setCurrentTime(dataParced.seconds)
-    .then(function (seconds) {
-      seconds = dataParced.seconds;
-    })
-    .catch(function (error) {
-      switch (error.name) {
-        case 'RangeError':
-          dataParced.seconds < 0 || dataParced.seconds > dataParced.duration;
-          break;
-      }
-    });
-} catch (error) {
-  error.name;
-  error.message;
+const newTime = localStorage.getItem(CURRENT_TIME);
+if (newTime) {
+  player.setCurrentTime(newTime);
 }
+// const iframe = document.querySelector('iframe');
+// const player = new Vimeo.Player(iframe);
+// const throttle = require('lodash.throttle');
+
+// const playHandle = function (data) {
+//   localStorage.setItem('videoplayer-current-time', JSON.stringify(data));
+// };
+
+// player.on('timeupdate', throttle(playHandle, 1000));
+
+// try {
+//   const dataParced = JSON.parse(
+//     localStorage.getItem('videoplayer-current-time')
+//   );
+//   player
+//     .setCurrentTime(dataParced.seconds)
+//     .then(function (seconds) {
+//       seconds = dataParced.seconds;
+//     })
+//     .catch(function (error) {
+//       switch (error.name) {
+//         case 'RangeError':
+//           dataParced.seconds < 0 || dataParced.seconds > dataParced.duration;
+//           break;
+//       }
+//     });
+// } catch (error) {
+//   error.name;
+//   error.message;
+// }
+
 // const iframe = document.querySelector('iframe');
 // const player = new Vimeo.Player(iframe);
 // const throttle = require('lodash.throttle');

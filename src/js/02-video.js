@@ -1,14 +1,17 @@
 const iframe = document.querySelector('iframe');
 const player = new Vimeo.Player(iframe);
-const time = 'videoplayer-current-time';
+const throttle = require('lodash.throttle');
 
 const playHandle = function (data) {
-  localStorage.getItem(time, JSON.stringify(data));
+  localStorage.setItem('videoplayer-current-time', JSON.stringify(data));
 };
+
 player.on('timeUpdate', throttle(playHandle, 1000));
 
 try {
-  const dataParced = JSON.parse(localStorage.getItem(time));
+  const dataParced = JSON.parse(
+    localStorage.getItem('videoplayer-current-time')
+  );
   player
     .setCurrentTime(parceData.seconds)
     .then(function (sec) {

@@ -13,14 +13,14 @@ try {
     localStorage.getItem('videoplayer-current-time')
   );
   player
-    .setCurrentTime(parceData.seconds)
-    .then(function (sec) {
-      sec = dataParced.sec;
+    .setCurrentTime(dataParced.seconds)
+    .then(function (seconds) {
+      seconds = dataParced.seconds;
     })
     .catch(function (error) {
       switch (error.name) {
         case 'RangeError':
-          dataParced.sec < 0 || dataParced.sec > dataParced.duration;
+          dataParced.seconds < 0 || dataParced.seconds > dataParced.duration;
           break;
       }
     });
@@ -28,3 +28,33 @@ try {
   error.name;
   error.message;
 }
+// const iframe = document.querySelector('iframe');
+// const player = new Vimeo.Player(iframe);
+// const throttle = require('lodash.throttle');
+
+// const onPlay = function (data) {
+//   localStorage.setItem('videoplayer-current-time', JSON.stringify(data));
+// };
+
+// player.on('timeupdate', throttle(onPlay, 1000));
+
+// try {
+//   const parsedData = JSON.parse(
+//     localStorage.getItem('videoplayer-current-time')
+//   );
+//   player
+//     .setCurrentTime(parsedData.seconds)
+//     .then(function (seconds) {
+//       seconds = parsedData.seconds;
+//     })
+//     .catch(function (error) {
+//       switch (error.name) {
+//         case 'RangeError':
+//           parsedData.seconds < 0 || parsedData.seconds > parsedData.duration;
+//           break;
+//       }
+//     });
+// } catch (error) {
+//   error.name;
+//   error.message;
+// }

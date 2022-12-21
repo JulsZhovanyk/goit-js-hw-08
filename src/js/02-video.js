@@ -3,30 +3,49 @@ const player = new Vimeo.Player(iframe);
 const throttle = require('lodash.throttle');
 const time = 'videoplayer-current-time';
 
-const playHandle = function (data) {
+const timeHandle = function (data) {
   localStorage.setItem(time, JSON.stringify(data));
 };
 
-player.on('timeupdate', throttle(playHandle, 1000));
+player.on('timeupdate', throttle(timeHandle, 1000));
 
-try {
-  const dataParced = JSON.parse(localStorage.getItem(time));
-  player
-    .setCurrentTime(dataParced.seconds)
-    .then(function (seconds) {
-      seconds = dataParced.seconds;
-    })
-    .catch(function (error) {
-      switch (error.name) {
-        case 'RangeError':
-          dataParced.seconds < 0 || dataParced.seconds > dataParced.duration;
-          break;
-      }
-    });
-} catch (error) {
-  error.name;
-  error.message;
+const newTimeHandle = localStorage.getItem(time);
+if (newTimeHandle) {
+  player.setCurrentTime(newTimeHandle.seconds);
 }
+
+player
+  .setCurrentTime(newTimeHandle)
+  .then(function (seconds) {
+    seconds = newTimeHandle.seconds;
+  })
+  .catch(function (error) {
+    switch (error.name) {
+      case 'RangeError':
+        newTimeHandle.seconds < 0 ||
+          newTimeHandle.seconds > newTimeHandle.duration;
+        break;
+    }
+  });
+
+// try {
+//   const dataParced = JSON.parse(localStorage.getItem(time));
+//   player
+//     .setCurrentTime(dataParced.seconds)
+//     .then(function (seconds) {
+//       seconds = dataParced.seconds;
+//     })
+//     .catch(function (error) {
+//       switch (error.name) {
+//         case 'RangeError':
+//           dataParced.seconds < 0 || dataParced.seconds > dataParced.duration;
+//           break;
+//       }
+//     });
+// } catch (error) {
+//   error.name;
+//   error.message;
+// }
 
 // const iframe = document.querySelector('iframe');
 // const player = new Vimeo.Player(iframe);

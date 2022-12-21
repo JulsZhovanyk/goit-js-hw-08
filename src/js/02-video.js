@@ -25,6 +25,11 @@ player
         newTimeHandle.seconds < 0 ||
           newTimeHandle.seconds > newTimeHandle.duration;
         break;
+
+      default:
+        error.name;
+        error.message;
+        break;
     }
   });
 

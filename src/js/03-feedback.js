@@ -19,7 +19,7 @@ function onFormSubmit(e) {
     e.currentTarget.elements.email.value === '' ||
     e.currentTarget.elements.message.value === ''
   ) {
-    alert('Мають бути заповнені всі поiля!');
+    alert('Мають бути заповнені всі поля!');
     return;
   }
   // e.currentTarget.reset();

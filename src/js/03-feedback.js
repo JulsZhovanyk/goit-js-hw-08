@@ -22,7 +22,8 @@ function onFormSubmit(e) {
     alert('Мають бути заповнені всі поля!');
     return;
   }
-  e.currentTarget.reset();
+  // e.currentTarget.reset();
+  formData.reset();
   console.log(JSON.parse(localStorage.getItem('feedback-form-state')));
   localStorage.removeItem('feedback-form-state');
 }

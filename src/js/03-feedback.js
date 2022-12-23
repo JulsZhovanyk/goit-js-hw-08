@@ -2,6 +2,7 @@ const formRef = document.querySelector('.feedback-form');
 const throttle = require('lodash.throttle');
 
 formRef.addEventListener('input', throttle(onTextareaInput, 500));
+formRef.addEventListener('input', onTextareaInput);
 formRef.addEventListener('submit', onFormSubmit);
 
 addInTextarea();
@@ -22,10 +23,9 @@ function onFormSubmit(e) {
     alert('Мають бути заповнені всі поля!');
     return;
   }
-  // e.currentTarget.reset();
-  formData.reset();
+  e.currentTarget.reset();
   console.log(JSON.parse(localStorage.getItem('feedback-form-state')));
-  localStorage.removeItem('feedback-form-state');
+  localStorage.clear();
 }
 
 function addInTextarea() {

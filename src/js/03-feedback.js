@@ -6,7 +6,7 @@ formRef.addEventListener('submit', onFormSubmit);
 
 addInTextarea();
 
-const formData = {};
+const formData = { email: '', message: '' };
 
 function onTextareaInput(e) {
   formData[e.target.name] = e.target.value;
@@ -15,6 +15,8 @@ function onTextareaInput(e) {
 
 function onFormSubmit(e) {
   e.preventDefault();
+  formData.email = '';
+  formData.message = '';
   if (
     e.currentTarget.elements.email.value === '' ||
     e.currentTarget.elements.message.value === ''

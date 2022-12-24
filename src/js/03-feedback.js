@@ -2,7 +2,6 @@ const formRef = document.querySelector('.feedback-form');
 const throttle = require('lodash.throttle');
 
 formRef.addEventListener('input', throttle(onTextareaInput, 500));
-formRef.addEventListener('input', onTextareaInput);
 formRef.addEventListener('submit', onFormSubmit);
 
 addInTextarea();
